@@ -1,5 +1,5 @@
 import { login } from '$lib/api/auth';
-import { fail, redirect } from '@sveltejs/kit';
+import { fail } from '@sveltejs/kit';
 
 export const actions = {
     default: async (event) => {
@@ -14,11 +14,11 @@ export const actions = {
             });
         }
 
-        const user = await login(username, password);
+        const token = await login(username, password);
 
-        if (user) {
+        if (token) {
             // Set server-side cookie
-            event.cookies.set('auth_token', JSON.stringify(user), {
+            event.cookies.set('auth_token', JSON.stringify(token), {
                 path: '/',
                 httpOnly: true,
                 secure: process.env.NODE_ENV === 'production',
@@ -26,8 +26,10 @@ export const actions = {
                 maxAge: 60 * 60 * 24 * 7 // 1 week
             });
 
-            // Redirect to books page
-            throw redirect(302, '/books');
+            return {
+                token,
+            };
+
         }
 
         return fail(400, { 

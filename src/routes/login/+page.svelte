@@ -1,23 +1,50 @@
 <script lang="ts">
+    import { enhance } from '$app/forms';
     import { goto } from '$app/navigation';
-    import { login } from '$lib/api/auth';
     import { authStore } from '$lib/stores/auth';
+    import type { ActionResult } from '@sveltejs/kit';
     
     let username = '';
     let password = '';
     let error = '';
 
-    async function handleLogin() {
-        const user = await login(username, password);
-        if (user) {
-            authStore.login(user);
-            localStorage.setItem('user', JSON.stringify(user));
-            goto('/books');
-        } else {
-            error = 'Invalid credentials';
-        }
-    }
+    // Handle the form submission
+    function handleEnhance({ formData, action, cancel }: { 
+        formData: FormData; 
+        action: URL; 
+        cancel: () => void; 
+    }) {
+        formData.set('username', username);
+        formData.set('password', password);
 
+        return async ({ result }: { result: ActionResult }) => {
+
+            if (result.type === 'success') {
+
+                const token = result?.data?.token;
+
+                if (token) {
+                    try {                        
+                        // Store auth data on client side
+                        localStorage.setItem('auth_token', token);
+                        
+                        // Update auth store
+                        authStore.login(token);
+                        
+                        // Navigate to books page
+                        goto('/books');
+                    } catch (err) {
+                        console.error('Failed to parse user data:', err);
+                        error = 'Login failed';
+                    }
+                } else {
+                    error = 'Invalid credentials';
+                }
+            } else {
+                error = 'Login failed';
+            }
+        };
+    }
 </script>
 
 
@@ -29,7 +56,11 @@
             class="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700"
         >
             <div class="p-6 space-y-4 md:space-y-6 sm:p-8">
-                <form on:submit|preventDefault={handleLogin} class="space-y-4 md:space-y-6">
+                <form 
+                    method="POST"
+                    use:enhance={handleEnhance}
+                    class="space-y-4 md:space-y-6"
+                >
                     <div class="mb-4">
                         <label
                             class="block text-gray-700 text-sm font-bold mb-2"
@@ -66,7 +97,9 @@
                         </div>
                     {/if}
                     <div class="flex items-center justify-between">
-                        <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">Login</button>
+                        <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+                            Login
+                        </button>
                     </div>
                 </form>
 
