@@ -1,6 +1,7 @@
 <script lang="ts">
     import { enhance } from '$app/forms';
     import { goto } from '$app/navigation';
+    import { APP_CONSTANTS } from '$lib';
     import { authStore } from '$lib/stores/auth';
     import type { ActionResult } from '@sveltejs/kit';
     
@@ -26,13 +27,12 @@
                 if (token) {
                     try {                        
                         // Store auth data on client side
-                        localStorage.setItem('auth_token', token);
+                        localStorage.setItem(APP_CONSTANTS.COOKIES.AUTH.COOKIE_NAME, token);
                         
                         // Update auth store
                         authStore.login(token);
                         
-                        // Navigate to books page
-                        goto('/books');
+                        goto(APP_CONSTANTS.ROUTES.AFTER_LOGIN);
                     } catch (err) {
                         console.error('Failed to parse user data:', err);
                         error = 'Login failed';

@@ -1,3 +1,4 @@
+import { APP_CONSTANTS } from '$lib';
 import { login } from '$lib/api/auth';
 import { fail } from '@sveltejs/kit';
 
@@ -18,12 +19,12 @@ export const actions = {
 
         if (token) {
             // Set server-side cookie
-            event.cookies.set('auth_token', JSON.stringify(token), {
+            event.cookies.set(APP_CONSTANTS.COOKIES.AUTH.COOKIE_NAME, JSON.stringify(token), {
                 path: '/',
                 httpOnly: true,
                 secure: process.env.NODE_ENV === 'production',
                 sameSite: 'strict',
-                maxAge: 60 * 60 * 24 * 7 // 1 week
+                maxAge: APP_CONSTANTS.COOKIES.AUTH.COOKIE_EXPIRY
             });
 
             return {
