@@ -27,7 +27,7 @@
 
 <div class="w-full h-full h-16">
   <button
-    class={"cursor-pointer w-full h-full transition-all font-bold text-3xl disabled:bg-gray-200 disabled:text-gray-400 " + classNames}
+    class={"cursor-pointer w-full h-full transition-all font-bold text-3xl disabled:bg-gray-200 disabled:text-gray-400 disabled:cursor-not-allowed " + classNames}
     class:bg-green-300={isActive}
     class:bg-red-300={!isActive}
     class:text-green-800={isActive}

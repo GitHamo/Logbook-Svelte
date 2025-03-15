@@ -1,8 +1,8 @@
 <script lang="ts">
-    import moment from 'moment';
+    import moment, { type Moment } from 'moment';
     let { today, activity, isLoading = false, onSelect } = $props<{
-        today: Date;
-        activity: {day: string, value: number|boolean}[];
+        today: Moment;
+        activity: Record<string, number|boolean>;
         isLoading: boolean;
         onSelect: (day: string) => void;
     }>();

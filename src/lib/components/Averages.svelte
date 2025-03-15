@@ -1,6 +1,6 @@
 <script lang="ts">
     let { averages, isLoading = false } = $props<{
-        averages: (string|number)[][];
+        averages: Record<string, string|number>[];
         isLoading: boolean;
     }>();
 
