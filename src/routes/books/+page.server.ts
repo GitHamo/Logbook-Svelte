@@ -1,17 +1,11 @@
+import { deleteBook, getBooks } from '$lib/api/books';
 import { error, fail } from '@sveltejs/kit';
 import type { Actions, PageServerLoad } from './$types';
 
 export const load: PageServerLoad = async ({ fetch, locals }) => {
     try {
-        const response = await fetch('/api/books', {
-            credentials: 'include',
-            headers: {
-                'Authorization': `Bearer ${locals.authToken}`
-            }
-        });
+        const books = await getBooks(locals.authToken as string);
 
-        if (!response.ok) throw new Error('Failed to fetch books');
-        const books = await response.json();
         return { books };
     } catch (err) {
         console.error(err);
@@ -76,22 +70,13 @@ export const actions: Actions = {
         }
     },
 
-    delete: async ({ request, fetch, locals }) => {
+    delete: async ({ request, locals }) => {
         try {
             const formData = await request.formData();
             const id = formData.get('id');
 
-            const response = await fetch('/api/books', {
-                method: 'DELETE',
-                credentials: 'include',
-                headers: { 
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${locals.authToken}`
-                },
-                body: JSON.stringify({ id })
-            });
+            await deleteBook(id as string, locals.authToken as string);
 
-            if (!response.ok) throw new Error('Failed to delete book');
             return { success: true };
         } catch (err) {
             console.error(err);

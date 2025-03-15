@@ -23,7 +23,7 @@
             if (result.type === 'success') {
 
                 const token = result?.data?.token;
-
+                
                 if (token) {
                     try {                        
                         // Store auth data on client side

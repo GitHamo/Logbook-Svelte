@@ -42,15 +42,6 @@ export class ApiClient {
         this.initPromise = null;
     }
 
-    private static getCsrfTokenFromCookies(): string | null {
-        const cookies = document.cookie.split(';');
-        const xsrfCookie = cookies.find(cookie => cookie.trim().startsWith('XSRF-TOKEN='));
-        if (xsrfCookie) {
-            return decodeURIComponent(xsrfCookie.split('=')[1]);
-        }
-        return null;
-    }
-
     static async fetch(url: string, options: RequestInit = {}): Promise<Response> {
         // Ensure we have CSRF token
         if (!this.csrfToken) {

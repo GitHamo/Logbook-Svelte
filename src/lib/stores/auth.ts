@@ -1,7 +1,7 @@
 import { browser } from '$app/environment';
 import { writable } from 'svelte/store';
 
-const COOKIE_KEY_USER = 'auth_token';
+const COOKIE_KEY_USER = 'current_user';
 
 interface User {
     id: number;

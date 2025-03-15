@@ -16,8 +16,8 @@ declare global {
 // Create a hook to handle authentication
 const authHook: Handle = async ({ event, resolve }) => {
     // Get the auth token from cookies
-    const authToken = event.cookies.get(APP_CONSTANTS.COOKIES.AUTH.COOKIE_NAME) ?? null;
-    event.locals.authToken = authToken;
+    const authToken = event.cookies.get(APP_CONSTANTS.COOKIES.AUTH.COOKIE_NAME);
+    event.locals.authToken = authToken ? JSON.parse(authToken) : null;
 
     return resolve(event);
 };

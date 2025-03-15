@@ -11,13 +11,13 @@ function getAuthHeaders(token: string): HeadersInit {
 }
 
 export async function getBookStats(bookId: string, authToken: string): Promise<LogbookResponse> {
-    const activityResponse = await ApiClient.get(`/api/books/${bookId}/activity`, {
+    const activityResponse = await ApiClient.get(`/api/log/books/${bookId}/activity`, {
         headers: getAuthHeaders(authToken)
     });
     if (!activityResponse.ok) throw new Error('Failed to fetch logbook activity');
     const activity = await activityResponse.json();
 
-    const averagesResponse = await ApiClient.get(`/api/books/${bookId}/averages`, {
+    const averagesResponse = await ApiClient.get(`/api/log/books/${bookId}/averages`, {
         headers: getAuthHeaders(authToken)
     });
     if (!averagesResponse.ok) throw new Error('Failed to fetch logbook averages');
@@ -31,7 +31,7 @@ export async function getBookStats(bookId: string, authToken: string): Promise<L
 
 export async function getBookEntry(bookId: string, day: Moment, authToken: string): Promise<number | boolean> {
     const formattedDay = day.format(URL_DATE_FORMAT);
-    const response = await ApiClient.get(`/api/books/${bookId}/entries/${formattedDay}`, {
+    const response = await ApiClient.get(`/api/log/books/${bookId}/entries/${formattedDay}`, {
         headers: getAuthHeaders(authToken)
     });
     if (!response.ok) throw new Error('Failed to fetch logbook entry');
@@ -47,7 +47,7 @@ export async function saveBookEntry(
 ): Promise<void> {
     const formattedDay = day.format(URL_DATE_FORMAT);
     const response = await ApiClient.put(
-        `/api/books/${bookId}/entries/${formattedDay}`,
+        `/api/log/books/${bookId}/entries/${formattedDay}`,
         { value },
         { headers: getAuthHeaders(authToken) }
     );
