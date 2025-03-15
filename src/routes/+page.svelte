@@ -6,6 +6,7 @@
 	import type { Book } from '$lib/types';
 	import moment, { type Moment } from 'moment';
 	import { onMount } from 'svelte';
+	import { writable } from 'svelte/store';
 
 	// Types and Interfaces
 	interface LogEntry {
@@ -37,7 +38,7 @@
 	let isLoading = $state(false);
 	let today = $state(moment());
 	let logbookTypeId = $derived(currentBook.log_type);
-	let logbookEntryValue = $state<number | boolean>(0);
+	const logbookEntryValue = writable<number | boolean>(0);
 
 	// Track latest requests to prevent race conditions
 	let latestBookId = $state<string | null>(null);
@@ -156,14 +157,14 @@
 			const entryValue = (await response.json()) as LogEntry;
 			// Only update if this is still the latest request for this book and day
 			if (latestDayRequest === thisRequest && currentBookId === latestBookId) {
-				logbookEntryValue = entryValue.value;
+				logbookEntryValue.set(entryValue.value);
 			}
 		} catch (error) {
 			handleError(error as Error, 'fetching log entry');
 		}
 	}
 
-    async function saveLogbookEntryValue() {
+    async function saveLogbookEntryValue(newValue: number | boolean) {
         if (!currentBookId) return;
 
 		const day = today.format(DATE_FORMAT);
@@ -177,13 +178,15 @@
 				headers: {
 					'Content-Type': 'application/json'
 				},
-				body: JSON.stringify({ value: logbookEntryValue }),
+				body: JSON.stringify({ value: newValue }),
 			});
 
             if (!response.ok) throw new Error('Failed to save logbook entry');
 
 			// Only fetch new data if this is still the latest save request and book
 			if (latestSaveRequest === thisRequest && currentBookId === latestBookId) {
+				logbookEntryValue.set(newValue);
+
 				await fetchCurrentBookData();
 			}
 		} catch (error) {

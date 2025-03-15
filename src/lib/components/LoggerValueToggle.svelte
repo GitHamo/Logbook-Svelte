@@ -1,6 +1,16 @@
 <script lang="ts">
+	import { onDestroy } from "svelte";
+
   let { todayValue, isLoading, onSave } = $props<{ todayValue: boolean, isLoading: boolean, onSave: (value: boolean) => void }>();
-  let isActive = $derived(Boolean(todayValue));
+  let isActive = $state(Boolean(todayValue.value));
+
+	const unsubscribe = todayValue.subscribe((value: boolean) => {
+		isActive = value;
+	});
+
+	onDestroy(() => {
+		unsubscribe();
+	});
 
   const classNames = [
     "rounded-tr-none",

@@ -1,6 +1,8 @@
 <script lang="ts">
+	import { onDestroy } from "svelte";
+
     let { todayValue, isLoading, onSave } = $props<{ todayValue: number, isLoading: boolean, onSave: (value: number) => void }>();
-    let count = $state(todayValue);
+    let count = $state(todayValue.value);
 
     const saveValue = () => {
         onSave(count);
@@ -23,6 +25,15 @@
 
         saveValue();
     };
+
+	const unsubscribe = todayValue.subscribe((value: number) => {
+		count = value;
+	});
+
+	onDestroy(() => {
+		unsubscribe();
+	});
+
 </script>
 
 <div class="grid md:row-span-2 grid-cols-6">
