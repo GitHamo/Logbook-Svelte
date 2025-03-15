@@ -23,9 +23,6 @@ export async function logout() {
         // Call logout endpoint if you have one
         await ApiClient.post('/logout', {});
 
-        // Clear CSRF token
-        ApiClient.clearToken();
-
         // Clear any stored auth data
         // removeCookie(APP_CONSTANTS.COOKIES.AUTH.COOKIE_NAME);
     } catch (error) {
