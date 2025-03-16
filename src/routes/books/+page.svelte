@@ -5,12 +5,14 @@
 	import BookForm from './BookForm.svelte';
 	import BooksList from './BooksList.svelte';
 
-    let selectedBook = $state<Book | null>(null);
-    let isSubmitting = $state(false);
+    let booksState = $state({
+        list: [],
+        selected: null,
+        isSubmitting: false
+    });
+
     let isSelecting = $state(false);
     let latestEditRequest = $state<string | null>(null);
-
-    let books = $state([]);
 
     async function handleEdit(book: Book) {
         const requestId = `edit-${book.id}-${Date.now()}`;
@@ -24,7 +26,7 @@
 
             // Only update if this is still the latest request
             if (latestEditRequest === requestId) {
-                selectedBook = book;
+                booksState.selected = book;
             }
         } finally {
             if (latestEditRequest === requestId) {
@@ -39,7 +41,7 @@
 
             if (!response.ok) throw new Error('Failed to fetch books');
             
-            books = await response.json();
+            booksState.list = await response.json();
 
         } catch (err) {
             console.error(err);
@@ -63,7 +65,7 @@
 
         await fetchBooks();
 
-        selectedBook = null;
+        booksState.selected = null;
     }
 
     async function handleDelete(book: Book) {
@@ -97,14 +99,14 @@
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-6">
             <div class="p-4 sm:p-8 bg-white shadow sm:rounded-lg">
-                <BookForm book={selectedBook} onSave={handleSave} {isSubmitting} />
+                <BookForm book={booksState.selected} onSave={handleSave} {booksState.isSubmitting} />
             </div>
             <div class="p-4 sm:p-8 bg-white shadow sm:rounded-lg">
                 <div class="flex flex-col">
                     <div class="overflow-x-auto sm:-mx-6 lg:-mx-8">
                         <div class="inline-block min-w-full py-2 sm:px-6 lg:px-8">
                             <div class="overflow-hidden">
-                                <BooksList {books} onEdit={handleEdit} onDelete={handleDelete} {isSelecting} />
+                                <BooksList {booksState.list} onEdit={handleEdit} onDelete={handleDelete} {isSelecting} />
                             </div>
                         </div>
                     </div>
