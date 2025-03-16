@@ -1,17 +1,6 @@
 import { APP_CONSTANTS } from '$lib';
-import type { Book } from '$lib/types';
 import type { Handle } from '@sveltejs/kit';
 import { sequence } from '@sveltejs/kit/hooks';
-
-// Define the Locals interface to include authToken
-declare global {
-    namespace App {
-        interface Locals {
-            authToken: string | null;
-            currentBook: Book | null;
-        }
-    }
-}
 
 // Create a hook to handle authentication
 const authHook: Handle = async ({ event, resolve }) => {
@@ -32,4 +21,4 @@ const currentBookHook: Handle = async ({ event, resolve }) => {
 };
 
 // Export the hooks in sequence
-export const handle = sequence(authHook, currentBookHook);
+export const handle: Handle = sequence(authHook, currentBookHook);

@@ -2,7 +2,6 @@ import { APP_CONSTANTS } from '$lib';
 
 export class ApiClient {
     static async fetch(url: string, options: RequestInit = {}): Promise<Response> {
-
         // Prepare headers
         const headers = new Headers(options.headers || {});
         headers.set('X-Requested-With', 'XMLHttpRequest');  // Required for Laravel to recognize AJAX request
