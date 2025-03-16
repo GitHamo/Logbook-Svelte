@@ -9,6 +9,11 @@ export interface LogbookResponse {
     }>;
     averages: Array<[string, number, number]>;
 }
+export interface LogbooksPaginatedResponse<T> {
+    items: T[];
+    per_page: number;
+    total: number;
+}
 
 function getAuthHeaders(token: string): HeadersInit {
     return {
@@ -16,37 +21,38 @@ function getAuthHeaders(token: string): HeadersInit {
     };
 }
 
-export async function getBooks(authToken: string): Promise<Book[]> {
-    const response = await ApiClient.get('/api/log/books', {
+export async function getBooks(authToken: string, currentPage: number = 1): Promise<LogbooksPaginatedResponse<Book>> {
+    const response = await ApiClient.get(`/api/log/books?page=${currentPage}`, {
         headers: getAuthHeaders(authToken)
     });
-    
+
     if (!response.ok) throw new Error('Failed to fetch books');
 
-    const data = await response.json();
+    const data = await response.json() as LogbooksPaginatedResponse<Book>;
 
-    return data?.items || [];
+    return data;
 }
 
-export async function createBook(book: Omit<Book, 'id'>, authToken: string): Promise<Book> {
+export async function createBook(book: Omit<Book, 'id'>, authToken: string): Promise<void> {
     const response = await ApiClient.post('/api/log/books', book, {
         headers: getAuthHeaders(authToken)
     });
+
     if (!response.ok) throw new Error('Failed to create book');
-    return response.json();
 }
 
-export async function updateBook(book: Book, authToken: string): Promise<Book> {
+export async function updateBook(book: Book, authToken: string): Promise<void> {
     const response = await ApiClient.put(`/api/log/books/${book.id}`, book, {
         headers: getAuthHeaders(authToken)
     });
+
     if (!response.ok) throw new Error('Failed to update book');
-    return response.json();
 }
 
 export async function deleteBook(id: string, authToken: string): Promise<void> {
     const response = await ApiClient.delete(`/api/log/books/${id}`, {
         headers: getAuthHeaders(authToken)
     });
+
     if (!response.ok) throw new Error('Failed to delete book');
 }

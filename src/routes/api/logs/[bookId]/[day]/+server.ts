@@ -1,4 +1,4 @@
-import { getBookEntry, saveBookEntry } from '$lib/api/books';
+import { getBookEntry, saveBookEntry } from '$lib/api/entries';
 import { withApiAuth } from '$lib/server/api';
 import { error, json } from '@sveltejs/kit';
 import type { RequestHandler } from './$types';
@@ -6,7 +6,6 @@ import type { RequestHandler } from './$types';
 export const GET: RequestHandler = async (event) => {
     return withApiAuth(event, async () => {
         try {
-            // return json({ value: Math.floor(Math.random() * 100) });
             const bookId = event.params.bookId;
             const entryDay = event.params.day;
             const entryValue = await getBookEntry(bookId, entryDay, event.locals.authToken as string);
