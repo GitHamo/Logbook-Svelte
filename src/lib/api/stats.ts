@@ -6,34 +6,66 @@ function getAuthHeaders(token: string): HeadersInit {
     };
 }
 
-export async function getBookActivity(bookId: string, authToken: string) {
-    try {
-        const response = await ApiClient.get(`/api/log/books/${bookId}/activity`, {
-            headers: getAuthHeaders(authToken)
-        });
-        
-        if (!response.ok) throw new Error('Failed to fetch logbook activity');
-        
-        return await response.json();
-    }
-    catch (error) {
-        console.error('Error fetching logbook activity:', error);
-        return [];
-    }
+export interface BookStats {
+    activity: Array<{
+        day: string;
+        value: number | boolean;
+        score: string;
+    }>;
+    averages: Array<[string, number, number]>;
 }
 
-export async function getBookAverages(bookId: string, authToken: string) {
+export async function getBookStats(bookId: string, authToken: string): Promise<BookStats> {
     try {
-        const response = await ApiClient.get(`/api/log/books/${bookId}/averages`, {
-            headers: getAuthHeaders(authToken)
-        });
+        const [activity, averages] = await Promise.all([
+            // Fetch activity
+            ApiClient.get(`/api/log/books/${bookId}/activity`, {
+                headers: getAuthHeaders(authToken)
+            }).then(async (response) => {
+                if (!response.ok) throw new Error('Failed to fetch logbook activity');
+                
+                // Handle 204 No Content response
+                if (response.status === 204) {
+                    return [];
+                }
 
-        if (!response.ok) throw new Error('Failed to fetch logbook averages');
+                try {
+                    const data = await response.json();
+                    return data || [];
+                } catch (parseError) {
+                    console.warn('Empty or invalid activity response, using default empty array');
+                    return [];
+                }
+            }),
 
-        return await response.json();
+            // Fetch averages
+            ApiClient.get(`/api/log/books/${bookId}/averages`, {
+                headers: getAuthHeaders(authToken)
+            }).then(async (response) => {
+                if (!response.ok) throw new Error('Failed to fetch logbook averages');
+                
+                // Handle 204 No Content response
+                if (response.status === 204) {
+                    return [];
+                }
+
+                try {
+                    const data = await response.json();
+                    return data || [];
+                } catch (parseError) {
+                    console.warn('Empty or invalid averages response, using default empty array');
+                    return [];
+                }
+            }),
+        ]);
+
+        return {
+            activity,
+            averages
+        };
     }
     catch (error) {
-        console.error('Error fetching logbook averages:', error);
-        return [];
+        console.error('Error fetching logbook data:', error);
+        throw error;
     }
 }
