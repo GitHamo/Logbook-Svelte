@@ -131,6 +131,7 @@
 		
 		try {
 			const response = await fetch(API_ENDPOINTS.logs(currentBookId));
+
 			if (!response.ok) throw new Error('Failed to load logbook data');
 
 			const data = await response.json();

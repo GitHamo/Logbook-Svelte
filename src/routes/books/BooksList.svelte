@@ -6,9 +6,10 @@
         20: "toggle",
     } as const;
 
-    let { books, onEdit, isSelecting = false } = $props<{ 
+    let { books, onEdit, onDelete, isSelecting = false } = $props<{ 
         books: Book[], 
         onEdit: (book: Book) => void,
+        onDelete: (book: Book) => void,
         isSelecting?: boolean 
     }>();
 </script>
@@ -49,6 +50,7 @@
                         onclick={() => {
                             if (!isSelecting) {
                                 onEdit(book);
+                                window.scrollTo({ top: 0, behavior: 'smooth' });
                             }
                         }}
                         class:opacity-50={isSelecting}
@@ -57,19 +59,17 @@
                     >
                         Edit
                     </button>
-                    <form 
-                        method="POST" 
-                        action="?/delete" 
-                        class="inline"
+                    <button
+                        type="button"
+                        class="cursor-pointer text-red-600 hover:text-red-900"
+                        onclick={() => {
+                            if (confirm(`Are you sure you want to delete "${book.name}"?`)) {
+                                onDelete(book);
+                            }
+                        }}
                     >
-                        <input type="hidden" name="id" value={book.id} />
-                        <button
-                            type="submit"
-                            class="cursor-pointer text-red-600 hover:text-red-900"
-                        >
-                            Delete
-                        </button>
-                    </form>
+                        Delete
+                    </button>
                 </td>
             </tr>
         {/each}

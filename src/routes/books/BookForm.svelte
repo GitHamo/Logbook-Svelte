@@ -1,5 +1,4 @@
 <script lang="ts">
-    import { enhance } from '$app/forms';
     import type { Book } from '$lib/types';
 
     const BOOK_TYPES = [
@@ -14,8 +13,9 @@
         color: book?.color || '',
     });
 
-    let { book = null, isSubmitting = false } = $props<{
+    let { book = null, onSave, isSubmitting = false } = $props<{
         book: Book | null;
+        onSave: (book: Omit<Book, 'id'> & { id?: string }) => void;
         isSubmitting: boolean;
     }>();
 
@@ -24,6 +24,23 @@
     function resetForm() {
         bookFormData = getInitialFormData(null);
         book = null;
+    }
+
+    async function handleSubmit() {
+        isSubmitting = true;
+        try {
+            await onSave({
+                id: bookFormData.id || undefined,
+                name: bookFormData.name,
+                log_type: Number(bookFormData.log_type) as 10 | 20,
+                color: bookFormData.color
+            });
+            resetForm();
+        } catch (error) {
+            console.error('Failed to save book:', error);
+        } finally {
+            isSubmitting = false;
+        }
     }
 
     $effect(() => {
@@ -35,13 +52,9 @@
 
 <form 
     class="space-y-4 md:space-y-6"
-    method="POST" 
-    action={book ? "?/update" : "?/create"}
-    use:enhance={() => {
-        isSubmitting = true;
-        return async ({ result }) => {
-            isSubmitting = false;
-        };
+    onsubmit={(e) => {
+        e.preventDefault();
+        handleSubmit();
     }}
 >
     <input
@@ -49,7 +62,6 @@
         name="id"
         id="id"
         bind:value={bookFormData.id}
-        required
         disabled
         />
     <div class="grid grid-cols-1 md:grid-cols-10 gap-4 w-full">

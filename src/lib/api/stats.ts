@@ -14,11 +14,11 @@ export async function getBookActivity(bookId: string, authToken: string) {
         
         if (!response.ok) throw new Error('Failed to fetch logbook activity');
         
-        return response.json();
+        return await response.json();
     }
     catch (error) {
         console.error('Error fetching logbook activity:', error);
-        throw error;
+        return [];
     }
 }
 
@@ -30,10 +30,10 @@ export async function getBookAverages(bookId: string, authToken: string) {
 
         if (!response.ok) throw new Error('Failed to fetch logbook averages');
 
-        return response.json();
+        return await response.json();
     }
     catch (error) {
         console.error('Error fetching logbook averages:', error);
-        throw error;
+        return [];
     }
 }

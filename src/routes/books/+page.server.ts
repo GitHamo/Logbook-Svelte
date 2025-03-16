@@ -1,39 +1,19 @@
-import { deleteBook, getBooks } from '$lib/api/books';
-import { error, fail } from '@sveltejs/kit';
-import type { Actions, PageServerLoad } from './$types';
-
-export const load: PageServerLoad = async ({ fetch, locals }) => {
-    try {
-        const books = await getBooks(locals.authToken as string);
-
-        return { books };
-    } catch (err) {
-        console.error(err);
-        throw error(500, 'Failed to load books');
-    }
-};
+import { createBook, deleteBook, updateBook } from '$lib/api/books';
+import { fail } from '@sveltejs/kit';
+import type { Actions } from './$types';
 
 export const actions: Actions = {
     create: async ({ request, fetch, locals }) => {
         try {
             const formData = await request.formData();
-            const book = {
-                title: formData.get('title'),
-                author: formData.get('author'),
-                isbn: formData.get('isbn')
+            const book: Book = {
+                name: formData.get('name') as string,
+                log_type: formData.get('log_type') || 0 as number,
+                color: formData.get('color') as string,
             };
 
-            const response = await fetch('/api/books', {
-                method: 'POST',
-                credentials: 'include',
-                headers: { 
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${locals.authToken}`
-                },
-                body: JSON.stringify(book)
-            });
+            await createBook(book, locals.authToken as string);
 
-            if (!response.ok) throw new Error('Failed to create book');
             return { success: true };
         } catch (err) {
             console.error(err);
@@ -44,25 +24,16 @@ export const actions: Actions = {
     update: async ({ request, fetch, locals }) => {
         try {
             const formData = await request.formData();
-            const id = formData.get('id');
+            const id = formData.get('id') as string;
             const book = {
                 id,
-                title: formData.get('title'),
-                author: formData.get('author'),
-                isbn: formData.get('isbn')
+                name: formData.get('name') as string,
+                log_type: formData.get('log_type') || 0 as number,
+                color: formData.get('color') as string,
             };
 
-            const response = await fetch('/api/books', {
-                method: 'PUT',
-                credentials: 'include',
-                headers: { 
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${locals.authToken}`
-                },
-                body: JSON.stringify(book)
-            });
+            await updateBook(book, locals.authToken as string);
 
-            if (!response.ok) throw new Error('Failed to update book');
             return { success: true };
         } catch (err) {
             console.error(err);
