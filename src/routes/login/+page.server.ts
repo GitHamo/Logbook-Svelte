@@ -33,7 +33,7 @@ export const actions = {
 
         }
 
-        return fail(400, { 
+        return fail(401, { 
             username, 
             error: 'Invalid credentials' 
         });

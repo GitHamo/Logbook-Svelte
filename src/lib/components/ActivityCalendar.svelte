@@ -6,7 +6,6 @@
         isLoading: boolean;
         onSelect: (day: string) => void;
     }>();
-	// console.log(activity);
 </script>
 
 {#if isLoading}

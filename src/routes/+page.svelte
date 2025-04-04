@@ -37,7 +37,7 @@
 	});
 	let isLoading = $state(false);
 	let today = $state(moment());
-	let logbookTypeId = $derived(currentBook.log_type);
+	let logbookTypeId = $derived(currentBook?.log_type);
 	const logbookEntryValue = writable<number | boolean>(0);
 
 	// Track latest requests to prevent race conditions

@@ -23,7 +23,6 @@
             if (result.type === 'success') {
 
                 const token = result?.data?.token;
-                
                 if (token) {
                     try {                        
                         // Store auth data on client side
@@ -69,7 +68,7 @@
                             Email
                         </label>
                         <input 
-                            type="text" 
+                            type="email" 
                             bind:value={username} 
                             placeholder="Email..."
                             class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
