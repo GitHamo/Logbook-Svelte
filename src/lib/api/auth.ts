@@ -5,7 +5,7 @@ export async function login(username: string, password: string): Promise<string>
         const response = await ApiClient.post('/api/tokens/create', { email: username, password });
 
         if (!response.ok) {
-            throw new Error('Login failed');
+            throw new Error('Login failed', { cause: response });
         }
 
         const data = await response.json();
