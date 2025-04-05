@@ -2,6 +2,7 @@
     import { browser } from '$app/environment';
     import { goto } from '$app/navigation';
     import { page } from '$app/state';
+    import Preloader from '$lib/components/Preloader.svelte';
     import { authStore } from '$lib/stores/auth';
     import "../app.css";
 
@@ -65,7 +66,7 @@
 				<div class="hidden sm:flex sm:items-center sm:ms-6">
 					<div class="ms-3 relative">
 						<div class="inline-flex rounded-md">
-							DropdownBooks
+							<Preloader />
 						</div>
 					</div>
 				</div>
