@@ -36,7 +36,7 @@
 		averages: [],
 		activity: {}
 	});
-	let isLoading = $state(false);
+    let isLoading = $derived($preloaderStore.ongoing || false);
 	let today = $state(moment());
 	let logbookTypeId = $derived(currentBook?.log_type);
 	const logbookEntryValue = writable<number | boolean>(0);
@@ -49,7 +49,6 @@
 	// Error handling
 	async function handleError(error: Error, context: string) {
 		console.error(`Error in ${context}:`, error);
-		isLoading = false;
 		// Could add toast/notification system here
 	}
 
@@ -72,7 +71,6 @@
 
     async function handleSelectCurrentBook(book: Book) {
         try {
-            isLoading = true;
 			preloaderStore.start();
             const thisBookId = book.id;
             latestBookId = thisBookId;  // Track this selection
@@ -123,7 +121,6 @@
             console.error('Error updating book selection:', error);
         } finally {
             if (latestBookId === book.id) {
-                isLoading = false;
 				preloaderStore.stop();
             }
         }
@@ -179,7 +176,6 @@
 		latestSaveRequest = thisRequest;
 
 		try {
-			isLoading = true;
 			preloaderStore.start();
 			const response = await fetch(API_ENDPOINTS.logEntry(currentBookId, day), {
 				method: 'POST',
@@ -201,7 +197,6 @@
 			handleError(error as Error, 'saving log entry');
 		} finally {
 			if (latestSaveRequest === thisRequest) {
-				isLoading = false;
 				preloaderStore.stop();
 			}
 		}
