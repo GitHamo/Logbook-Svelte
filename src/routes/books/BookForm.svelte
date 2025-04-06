@@ -1,5 +1,6 @@
 <script lang="ts">
-    import type { Book } from '$lib/types';
+	import { preloaderStore } from '$lib/stores/preloader';
+	import type { Book } from '$lib/types';
 
     const BOOK_TYPES = [
         { id: 10, name: "count" },
@@ -29,6 +30,7 @@
     async function handleSubmit() {
         isSubmitting = true;
         try {
+            preloaderStore.start();
             await onSave({
                 id: bookFormData.id || undefined,
                 name: bookFormData.name,
@@ -40,6 +42,7 @@
             console.error('Failed to save book:', error);
         } finally {
             isSubmitting = false;
+            preloaderStore.stop();
         }
     }
 

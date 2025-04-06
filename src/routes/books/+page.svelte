@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { preloaderStore } from '$lib/stores/preloader.js';
 	import type { Book } from '$lib/types';
 	import { error } from '@sveltejs/kit';
 	import { onMount } from 'svelte';
@@ -111,14 +112,14 @@
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-6">
             <div class="p-4 sm:p-8 bg-white shadow sm:rounded-lg">
-                <BookForm book={booksState.selected} onSave={handleSave} {booksState.isSubmitting} />
+                <BookForm book={booksState.selected} onSave={handleSave} isSubmitting={booksState.isSubmitting} />
             </div>
             <div class="p-4 sm:p-8 bg-white shadow sm:rounded-lg">
                 <div class="flex flex-col">
                     <div class="overflow-x-auto sm:-mx-6 lg:-mx-8">
                         <div class="inline-block min-w-full py-2 sm:px-6 lg:px-8">
                             <div class="overflow-hidden">
-                                <BooksList {booksState.list} onEdit={handleEdit} onDelete={handleDelete} {isSelecting} />
+                                <BooksList books={booksState.list} onEdit={handleEdit} onDelete={handleDelete} isSelecting={isSelecting} />
                             </div>
                         </div>
                     </div>
