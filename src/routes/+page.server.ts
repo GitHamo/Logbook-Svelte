@@ -15,7 +15,8 @@ export const load: PageServerLoad = async ({ fetch, params, locals }) => {
             }
         });
 
-        if (!booksResponse.ok) throw new Error('Failed to fetch books');
+        if (!booksResponse.ok) throw new Error('Failed to fetch books list');
+
         const books = await booksResponse.json();
 
         return { currentBookId, books, currentBook };
