@@ -3,6 +3,7 @@
 	import Averages from '$lib/components/Averages.svelte';
 	import BooksDropdown from '$lib/components/BooksDropdown.svelte';
 	import LogbookLogger from '$lib/components/Logger.svelte';
+	import { preloaderStore } from '$lib/stores/preloader.js';
 	import type { Book } from '$lib/types';
 	import moment, { type Moment } from 'moment';
 	import { onMount } from 'svelte';
@@ -72,6 +73,7 @@
     async function handleSelectCurrentBook(book: Book) {
         try {
             isLoading = true;
+			preloaderStore.start();
             const thisBookId = book.id;
             latestBookId = thisBookId;  // Track this selection
 
@@ -122,13 +124,14 @@
         } finally {
             if (latestBookId === book.id) {
                 isLoading = false;
+				preloaderStore.stop();
             }
         }
     }
 
 	async function fetchCurrentBookData() {
 		if (!currentBookId) return;
-		
+
 		try {
 			const response = await fetch(API_ENDPOINTS.logs(currentBookId));
 
@@ -152,6 +155,7 @@
 		latestDayRequest = thisRequest;
 
 		try {
+			preloaderStore.start();
 			const response = await fetch(API_ENDPOINTS.logEntry(currentBookId, day));
 			if (!response.ok) throw new Error('Failed to load logbook entry');
 
@@ -162,6 +166,8 @@
 			}
 		} catch (error) {
 			handleError(error as Error, 'fetching log entry');
+		} finally {
+			preloaderStore.stop();
 		}
 	}
 
@@ -174,6 +180,7 @@
 
 		try {
 			isLoading = true;
+			preloaderStore.start();
 			const response = await fetch(API_ENDPOINTS.logEntry(currentBookId, day), {
 				method: 'POST',
 				headers: {
@@ -195,6 +202,7 @@
 		} finally {
 			if (latestSaveRequest === thisRequest) {
 				isLoading = false;
+				preloaderStore.stop();
 			}
 		}
 	}

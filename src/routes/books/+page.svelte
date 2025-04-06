@@ -37,6 +37,8 @@
 
     async function fetchBooks() {
         try {
+			preloaderStore.start();
+
             const response = await fetch('/api/books');
 
             if (!response.ok) throw new Error('Failed to fetch books');
@@ -48,9 +50,13 @@
 
             throw error(500, 'Failed to load books');
         }
+
+        preloaderStore.stop();
     }
 
     async function handleSave(book: Book) {
+        preloaderStore.start();
+
         const response = await fetch('/api/books', {
             method: 'POST',
             headers: {
@@ -66,9 +72,13 @@
         await fetchBooks();
 
         booksState.selected = null;
+        
+        preloaderStore.stop();
     }
 
     async function handleDelete(book: Book) {
+        preloaderStore.start();
+
         const response = await fetch('/api/books', {
             method: 'DELETE',
             headers: {
@@ -82,6 +92,8 @@
         }
         
         await fetchBooks();
+
+        preloaderStore.stop();
     }
 
     onMount(async () => {
