@@ -59,7 +59,11 @@
 <div id="main_preloader" class="preloader">
 	{#if ongoing}
 		<div role="status" class="relative h-10 w-10">
-			<div class="absolute inset-0 z-10 flex items-center justify-center text-center font-semibold">
+			<div class="absolute inset-0 z-10 flex items-center justify-center text-center font-semibold"
+				class:text-blue-600={fillColor === 'blue'}
+				class:text-orange-600={fillColor === 'orange'}
+				class:text-red-600={fillColor === 'red'}
+			>
 				{format(elapsed)}
 			</div>
 			<svg
