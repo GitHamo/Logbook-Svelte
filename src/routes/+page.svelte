@@ -33,7 +33,7 @@
 	let currentBook = $state(data.currentBook);
 	let currentBookData = $state<BookData>({
 		averages: [],
-		activity: {},
+		activity: {}
 	});
 	let isLoading = $state(false);
 	let today = $state(moment());

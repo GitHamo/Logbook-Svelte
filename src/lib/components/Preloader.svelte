@@ -40,6 +40,13 @@
 
 	function format(ms: number): string {
 		const sec = Math.floor(ms / 1000);
+
+		// If time is less than 60 seconds, just return the seconds
+		if (sec < 60) {
+			return `${sec}`;
+		}
+
+		// If time is 60 seconds or more, return minutes and seconds
 		const min = Math.floor(sec / 60);
 		const secs = (sec % 60).toString().padStart(2, '0');
 		return `${min}:${secs}`;
@@ -52,13 +59,12 @@
 <div id="main_preloader" class="preloader">
 	{#if ongoing}
 		<div role="status" class="relative h-10 w-10">
-			
 			<div class="absolute inset-0 z-10 flex items-center justify-center text-center font-semibold">
 				{format(elapsed)}
 			</div>
 			<svg
 				aria-hidden="true"
-				class="inline h-10 w-10 animate-spin text-gray-200 dark:text-gray-600 z-0"
+				class="z-0 inline h-10 w-10 animate-spin text-gray-200 dark:text-gray-600"
 				class:fill-blue-600={fillColor === 'blue'}
 				class:fill-orange-600={fillColor === 'orange'}
 				class:fill-red-600={fillColor === 'red'}
