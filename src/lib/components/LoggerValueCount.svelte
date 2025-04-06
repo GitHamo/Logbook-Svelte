@@ -48,21 +48,21 @@
 
 <div class="grid grid-cols-3">
     <button
-        class={"cursor-pointer bg-slate-400 hover:bg-blue-300 px-2.5 py-1.5 text-xl font-bold text-blue-900 disabled:opacity-50 disabled:cursor-not-allowed"}
+        class={"cursor-pointer rounded-bl-xl bg-slate-400 hover:bg-blue-300 px-2.5 py-1.5 text-xl font-bold text-blue-900 disabled:opacity-50 disabled:cursor-not-allowed"}
         disabled={isLoading}
         onclick={decrement}
     >
         -1
     </button>
     <button
-        class="cdisabled:opacity-50 bg-slate-400 hover:bg-red-400 text-red-900 text-xs font-semibold uppercase justify-center disabled:opacity-50 disabled:cursor-not-allowed"
+        class="cursor-pointer cdisabled:opacity-50 bg-slate-400 hover:bg-red-400 text-red-900 text-xs font-semibold uppercase justify-center disabled:opacity-50 disabled:cursor-not-allowed"
         disabled={isLoading}
         onclick={reset}
     >
         Reset
     </button>
     <button
-        class={"bg-slate-400 hover:bg-blue-300 px-2.5 py-1.5 text-xl font-bold text-blue-900 disabled:opacity-50 disabled:cursor-not-allowed"}
+        class={"cursor-pointer rounded-br-xl  bg-slate-400 hover:bg-blue-300 px-2.5 py-1.5 text-xl font-bold text-blue-900 disabled:opacity-50 disabled:cursor-not-allowed"}
         disabled={isLoading}
         onclick={increment}
     >

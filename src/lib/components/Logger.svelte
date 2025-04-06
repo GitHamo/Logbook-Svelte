@@ -28,9 +28,9 @@
     const currentLogger = $derived(availableLoggerComponents[typeId as LogType]);
 </script>
 
-<div class="space-y-4">
-    <div id="logbook-logger" class=" border-10 border-slate-400 rounded-3xl shadow-sm grid grid-cols-1 sm:grid-cols-2 md:grid-cols-7 lg:grid-cols-7 grid-rows-2">
-        <div class="md:col-span-12 lg:col-span-12 grid self-center">
+<div class="space-y-4 h-full">
+    <div id="logbook-logger" class="h-full border-10 border-slate-400 rounded-3xl shadow-sm grid grid-cols-1 sm:grid-cols-2 md:grid-cols-7 lg:grid-cols-7 grid-rows-2">
+        <div class="md:col-span-12 lg:col-span-12 grid">
             <div class="text-3xl md:text-4xl lg:text-5xl">
                 <LoggerDay {...data} />
             </div>
