@@ -11,7 +11,7 @@ export const APP_CONSTANTS = {
         BASE_URL: process.env.APP_RESOURCES_API_URL || env.PUBLIC_APP_RESOURCES_API_URL || 'http://localhost:8000',
     },
     ROUTES: {
-        AFTER_LOGIN: '/books',
+        AFTER_LOGIN: '/',
         AFTER_LOGOUT: '/login'
     },
     COOKIES: {
