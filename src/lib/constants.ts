@@ -3,11 +3,12 @@ import { env } from '$env/dynamic/public';
 export const APP_CONSTANTS = {
     API: {
         ALLOWED_ORIGINS: [
+            process.env.APP_URL,
             env.PUBLIC_APP_URL,
             'http://localhost:5173',
 
         ] as const,
-        BASE_URL: env.PUBLIC_APP_RESOURCES_API_URL ?? 'http://localhost:8000',
+        BASE_URL: process.env.APP_RESOURCES_API_URL || env.PUBLIC_APP_RESOURCES_API_URL || 'http://localhost:8000',
     },
     ROUTES: {
         AFTER_LOGIN: '/books',
