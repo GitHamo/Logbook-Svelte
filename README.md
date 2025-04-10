@@ -1,38 +1,51 @@
-# sv
+# Logbook Frontend
 
-Everything you need to build a Svelte project, powered by [`sv`](https://github.com/sveltejs/cli).
+## Overview
 
-## Creating a project
+Logbook Frontend is a web application built using Svelte, a lightweight JavaScript framework for building fast and efficient web applications. This project provides a user-friendly interface for managing logbook entries, allowing users to track and analyze their activities.
 
-If you're seeing this, you've probably already done this step. Congrats!
+## Features
 
-```bash
-# create a new project in the current directory
-npx sv create
+-   User authentication and authorization
+-   Logbook entry management (create, read, update, delete)
+-   Activity tracking and analysis
+-   Support for multiple logbook types (e.g. count, toggle)
+-   Keyboard navigation for easy date selection
+-   Responsive design for mobile and desktop devices
 
-# create a new project in my-app
-npx sv create my-app
-```
+## Getting Started
 
-## Developing
+### Prerequisites
 
-Once you've created a project and installed dependencies with `npm install` (or `pnpm install` or `yarn`), start a development server:
+-   Node.js (version 14 or higher)
+-   npm (version 6 or higher)
+-   Svelte (version 3 or higher)
 
-```bash
-npm run dev
+### Installation
 
-# or start the server and open the app in a new browser tab
-npm run dev -- --open
-```
+1.  Install dependencies:  `npm install`
+3.  Start the development server:  `npm run dev` or `npm run dev -- --open` # or start the server and open the app in a new browser tab
 
-## Building
+### Building and Deploying
 
-To create a production version of your app:
+1.  Build the production version:  `npm run build`
+2.  Deploy to your preferred hosting platform (e.g. Vercel, Netlify, GitHub Pages)
 
-```bash
-npm run build
-```
+## Project Structure
 
-You can preview the production build with `npm run preview`.
+-   `src`: Source code for the application
+-   `src/routes`: Route definitions for the application
+-   `src/components`: Reusable UI components
+-   `src/stores`: Global state management using Svelte stores
+-   `src/types`: Type definitions for the application
+-   `static`: Static assets (e.g. images, fonts)
 
-> To deploy your app, you may need to install an [adapter](https://svelte.dev/docs/kit/adapters) for your target environment.
+## License
+
+This project is licensed under the MIT License. See the  [LICENSE file](https://file+.vscode-resource.vscode-cdn.net/c%3A/Users/h3ll-lpt/.vscode/extensions/codeium.codeium-1.42.7/dist/LICENSE)  for details.
+
+## Acknowledgments
+
+-   Svelte:  [https://svelte.dev](https://svelte.dev/)
+-   Svelte Kit:  [https://kit.svelte.dev](https://kit.svelte.dev/)
+-   Moment.js:  [https://momentjs.com](https://momentjs.com/)
