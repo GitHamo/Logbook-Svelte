@@ -2,8 +2,11 @@
     import { enhance } from '$app/forms';
     import { goto } from '$app/navigation';
     import { APP_CONSTANTS } from '$lib';
+    import Preloader from '$lib/components/Preloader.svelte';
     import { authStore } from '$lib/stores/auth';
+    import { preloaderStore } from '$lib/stores/preloader';
     import type { ActionResult } from '@sveltejs/kit';
+    import { slide } from 'svelte/transition';
     
     let username = '';
     let password = '';
@@ -15,6 +18,9 @@
         action: URL; 
         cancel: () => void; 
     }) {
+        preloaderStore.start();
+        
+        error = '';
         formData.set('username', username);
         formData.set('password', password);
 
@@ -42,6 +48,8 @@
             } else {
                 error = 'Login failed';
             }
+
+            preloaderStore.stop();
         };
     }
 </script>
@@ -75,7 +83,7 @@
                             required 
                         />
                     </div>
-                    <div class="mb-6">
+                    <div class="mb-4">
                         <label
                             class="block text-gray-700 dark:text-slate-400 text-sm font-bold mb-2"
                             for="password"
@@ -91,7 +99,8 @@
                         />
                     </div>
                     {#if error}
-                        <div class="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-red-950 dark:text-red-400" role="alert">
+                        <div class="mb-4 p-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-red-950 dark:text-red-400" role="alert"
+                        transition:slide >
                             { error }
                         </div>
                     {/if}
@@ -99,6 +108,7 @@
                         <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline cursor-pointer">
                             Login
                         </button>
+                        <Preloader />
                     </div>
                 </form>
 
