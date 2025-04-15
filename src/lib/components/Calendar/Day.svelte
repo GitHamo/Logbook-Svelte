@@ -12,7 +12,7 @@
 	disabled={isDisabled}
 	class:cursor-pointer={!isDisabled}
 	style={!isDisabled && !hasNoValue ? `background-color: ${day.color}` : ""}
-	use:tooltip={day.label + " (" + day.value + ")"}
+	use:tooltip={day.label + (day.value ? " (" + day.value + ")" : '')}
 >
 	<span class="text-xs leading-none"
 		class:hidden={mode === 'mini'}
