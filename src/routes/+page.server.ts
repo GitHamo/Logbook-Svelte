@@ -31,7 +31,11 @@ export const actions: Actions = {
 		const formData = await request.formData();
 		const bookData = Object.fromEntries(formData);
 
-        cookies.set(APP_CONSTANTS.COOKIES.CURRENT_BOOK.COOKIE_NAME, JSON.stringify(bookData), { path: "/", httpOnly: false });
+        cookies.set(APP_CONSTANTS.COOKIES.CURRENT_BOOK.COOKIE_NAME, JSON.stringify(bookData), {
+            path: "/",
+            httpOnly: false,
+            maxAge: APP_CONSTANTS.COOKIES.CURRENT_BOOK.COOKIE_EXPIRY
+        });
 
 		return { success: true };
 	},
