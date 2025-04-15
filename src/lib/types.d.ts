@@ -13,6 +13,7 @@ declare global {
         type Mode = 'mini' | 'md';
 
         interface Day {
+            dayNumber: integer;
             label: string;
             isOwn: boolean;
             value: any | null;
