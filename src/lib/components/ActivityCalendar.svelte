@@ -1,5 +1,6 @@
 <script lang="ts">
-    import moment, { type Moment } from 'moment';
+	import { tooltip } from '$lib/actions/tooltip';
+	import moment, { type Moment } from 'moment';
     let { today, activity, isLoading = false, onSelect } = $props<{
         today: Moment;
         activity: Record<string, number|boolean>;
@@ -18,6 +19,7 @@
 				style={`background-color: ${dataPoint.score}`}
 				onclick={() => onSelect(moment(dataPoint.day, 'DD/MM/YYYY'))}
 				title={dataPoint.day + " (" + dataPoint.value + ")"}
+				use:tooltip={dataPoint.day + " (" + dataPoint.value + ")"}
 				aria-label={dataPoint.day + " (" + dataPoint.value + ")"}
 			>
 			</button>
