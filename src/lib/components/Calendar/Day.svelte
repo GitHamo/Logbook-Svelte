@@ -5,6 +5,11 @@
 
 	let hasNoValue = $derived(day.value === null);
 	let isDisabled = $derived(day?.isOwn === false);
+	let tooltipText = $derived(
+		((!isDisabled && !hasNoValue)
+			? `${day.label}(${day.value})`
+			: null)
+	);
 </script>
 <button class="calendar-day aspect-square border border-solid border-gray-600 rounded-full text-center hover:border-red-950"
 	class:opacity-25={isDisabled}
@@ -12,7 +17,7 @@
 	disabled={isDisabled}
 	class:cursor-pointer={!isDisabled}
 	style={!isDisabled && !hasNoValue ? `background-color: ${day.color}` : ""}
-	use:tooltip={day.label + (day.value ? " (" + day.value + ")" : '')}
+	use:tooltip={tooltipText}
 >
 	<span class="text-xs leading-none"
 		class:hidden={mode === 'mini'}
