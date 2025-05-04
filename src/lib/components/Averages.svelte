@@ -18,7 +18,7 @@
 	<div>Loading..</div>
 {:else}
 	{#each averages as dataPoint, index}
-		<div class="flex flex-col items-center justify-center">
+		<div class="flex flex-col items-center">
 			<dd
 				class="text-gray-500 dark:text-gray-400 uppercase text-[11px]"
 			>
