@@ -7,7 +7,7 @@
 	let isDisabled = $derived(day?.isOwn === false);
 	let tooltipText = $derived(
 		((!isDisabled && !hasNoValue)
-			? `${day.label}(${day.value})`
+			? `${day.label} (${day.value})`
 			: null)
 	);
 </script>

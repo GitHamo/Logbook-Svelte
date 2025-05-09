@@ -21,6 +21,7 @@ declare global {
         }
 
         interface Week {
+            label: string;
             days: Day[];
         }
 

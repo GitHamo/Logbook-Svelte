@@ -22,29 +22,6 @@ export const GET: RequestHandler = async (event) => {
                 lastPage = Math.ceil(fetched.total / fetched.per_page);
             } while (currentPage <= lastPage);
 
-            // if (!response.ok) return json(
-            //     [
-            //         {
-            //             "id": "9d0639c2-0921-4772-9069-e19455a625ac",
-            //             "log_type": 10,
-            //             "name": "Jobz",
-            //             "color": ""
-            //         },
-            //         {
-            //             "id": "9d8b4977-021a-4cf3-ae41-3cee7d57a7d0",
-            //             "log_type": 20,
-            //             "name": "getsome",
-            //             "color": "#ff0000"
-            //         },
-            //         {
-            //             "id": "9d90a153-9137-4e3a-9f5e-c9fda040b3fa",
-            //             "log_type": 20,
-            //             "name": "Badfilternreinigung",
-            //             "color": "#c0c0c0"
-            //         }
-            //     ]
-
-            // );
             return json(books);
         } catch (err) {
             console.log('error', err);

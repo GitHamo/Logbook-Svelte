@@ -2,6 +2,7 @@
 	import ActivityCalendar from '$lib/components/ActivityCalendar.svelte';
 	import Averages from '$lib/components/Averages.svelte';
 	import BooksDropdown from '$lib/components/BooksDropdown.svelte';
+	import Calendar from '$lib/components/Calendar.svelte';
 	import LogbookLogger from '$lib/components/Logger.svelte';
 	import { preloaderStore } from '$lib/stores/preloader.js';
 	import type { Book } from '$lib/types';
@@ -9,14 +10,10 @@
 	import { onMount } from 'svelte';
 	import { writable } from 'svelte/store';
 
-	// Types and Interfaces
-	interface LogEntry {
-		value: number | boolean;
-	}
-
 	interface BookData {
 		averages: number[];
 		activity: Record<string, number | boolean>;
+		activityCalendar: Calendars.YearlyCalendar[];
 	}
 
 	// Constants
@@ -34,7 +31,8 @@
 	let currentBook = $state(data.currentBook);
 	let currentBookData = $state<BookData>({
 		averages: [],
-		activity: {}
+		activity: {},
+		activityCalendar: [],
 	});
 	let isLoading = $derived($preloaderStore.ongoing || false);
 	let today = $state(moment());
@@ -285,6 +283,13 @@
 								activity={currentBookData.activity}
 								onSelect={handleSelectCurrentDay}
 							/>
+						</div>
+					</div>
+					<div class={'w-full col-span-3 p-2'}>
+						<div class={'calendar h-full rounded-lg bg-white p-6 overflow-hidden p-4 shadow-md md:p-6 grid gap-4'}>
+							{#each currentBookData.activityCalendar as calendar}
+							<Calendar {calendar} mode={'md'} />
+							{/each}
 						</div>
 					</div>
 				</div>
