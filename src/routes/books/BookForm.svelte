@@ -53,7 +53,7 @@
     });
 </script>
 
-<form 
+<form
     class="space-y-4 md:space-y-6"
     onsubmit={(e) => {
         e.preventDefault();
@@ -125,4 +125,4 @@
             </button>
         </div>
     </div>
-</form> 
+</form>

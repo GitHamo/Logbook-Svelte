@@ -9,7 +9,7 @@ export const GET: RequestHandler = async (event) => {
             const bookId = event.params.bookId;
             const entryDay = event.params.day;
             const entryValue = await getBookEntry(bookId, entryDay, event.locals.authToken as string);
-            
+
             return json(entryValue);
         } catch (err) {
             throw error(500, 'Failed to load logbook day');

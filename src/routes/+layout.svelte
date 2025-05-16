@@ -42,9 +42,9 @@
 					>
 						<a class={navItemClassNames('/')} href="/">Home</a>
 						<a class={navItemClassNames('/books')} href="/books">Books</a>
-						<form 
-							action="/logout" 
-							method="POST" 
+						<form
+							action="/logout"
+							method="POST"
 							class="inline-flex"
 							onsubmit={(e) => {
 								e.preventDefault();
@@ -52,8 +52,8 @@
 								(e.target as HTMLFormElement).submit();
 							}}
 						>
-							<button 
-								type="submit" 
+							<button
+								type="submit"
 								class="inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium leading-5 transition duration-150 ease-in-out focus:outline-none uppercase tracking-widest border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300 focus:text-gray-700 focus:border-gray-300 cursor-pointer font-semibold"
 							>
 								Logout
@@ -61,7 +61,7 @@
 						</form>
 					</div>
 				</div>
-				
+
 				<div class="hidden sm:flex sm:items-center sm:ms-6">
 					<div class="ms-3 relative">
 						<div class="inline-flex rounded-md">
@@ -74,9 +74,9 @@
 			<div class="sm:hidden block space-y-1 px-2 pt-2 pb-3">
 				<a class={navItemClassNames('/')} href="/">Home</a>
 				<a class={navItemClassNames('/books')} href="/books">Books</a>
-				<form 
-					action="/logout" 
-					method="POST" 
+				<form
+					action="/logout"
+					method="POST"
 					class="inline-flex"
 					onsubmit={(e) => {
 						e.preventDefault();
@@ -84,15 +84,15 @@
 						(e.target as HTMLFormElement).submit();
 					}}
 				>
-					<button 
-						type="submit" 
+					<button
+						type="submit"
 						class="inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium leading-5 transition duration-150 ease-in-out focus:outline-none uppercase tracking-widest border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300 focus:text-gray-700 focus:border-gray-300 cursor-pointer font-semibold"
 					>
 						Logout
 					</button>
 				</form>
 			</div>
-			
+
 		</div>
 	</nav>
 	{/if}

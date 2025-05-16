@@ -62,4 +62,4 @@ export const DELETE: RequestHandler = async (event) => {
             throw error(500, 'Failed to delete book');
         }
     });
-}; 
+};

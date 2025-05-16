@@ -9,9 +9,9 @@ export const actions = {
         const password = data.get('password')?.toString();
 
         if (!username || !password) {
-            return fail(400, { 
-                username, 
-                error: 'Username and password are required' 
+            return fail(400, {
+                username,
+                error: 'Username and password are required'
             });
         }
 
@@ -33,9 +33,9 @@ export const actions = {
 
         }
 
-        return fail(401, { 
-            username, 
-            error: 'Invalid credentials' 
+        return fail(401, {
+            username,
+            error: 'Invalid credentials'
         });
     }
 };

@@ -18,10 +18,10 @@
     async function handleEdit(book: Book) {
         const requestId = `edit-${book.id}-${Date.now()}`;
         latestEditRequest = requestId;
-        
+
         try {
             isSelecting = true;
-            
+
             // Artificial delay to prevent rapid switching
             await new Promise(resolve => setTimeout(resolve, 100));
 
@@ -43,7 +43,7 @@
             const response = await fetch('/api/books');
 
             if (!response.ok) throw new Error('Failed to fetch books');
-            
+
             booksState.list = await response.json();
 
         } catch (err) {
@@ -73,7 +73,7 @@
         await fetchBooks();
 
         booksState.selected = null;
-        
+
         preloaderStore.stop();
     }
 
@@ -91,14 +91,14 @@
         if (!response.ok) {
             throw error(500, 'Failed to delete book');
         }
-        
+
         await fetchBooks();
 
         preloaderStore.stop();
     }
 
     onMount(async () => {
-        await fetchBooks(); 
+        await fetchBooks();
     });
 
 </script>

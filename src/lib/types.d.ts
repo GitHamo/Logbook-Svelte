@@ -40,4 +40,3 @@ declare global {
 }
 
 export type { Book, Calendars, LogType };
-

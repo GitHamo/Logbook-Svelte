@@ -36,7 +36,7 @@ function createAuthStore() {
         },
         logout: () => {
             set({ user: null, isAuthenticated: false });
-            
+
             // Only use localStorage in browser
             if (browser) {
                 try {
@@ -54,9 +54,9 @@ function createAuthStore() {
 
                     if (storedUser) {
                         const user = JSON.parse(storedUser);
-                        set({ 
-                            user, 
-                            isAuthenticated: true 
+                        set({
+                            user,
+                            isAuthenticated: true
                         });
                     }
                 } catch (error) {

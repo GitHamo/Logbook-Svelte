@@ -7,19 +7,19 @@
     import { preloaderStore } from '$lib/stores/preloader';
     import type { ActionResult } from '@sveltejs/kit';
     import { slide } from 'svelte/transition';
-    
+
     let username = '';
     let password = '';
     let error = '';
 
     // Handle the form submission
-    function handleEnhance({ formData, action, cancel }: { 
-        formData: FormData; 
-        action: URL; 
-        cancel: () => void; 
+    function handleEnhance({ formData, action, cancel }: {
+        formData: FormData;
+        action: URL;
+        cancel: () => void;
     }) {
         preloaderStore.start();
-        
+
         error = '';
         formData.set('username', username);
         formData.set('password', password);
@@ -30,13 +30,13 @@
 
                 const token = result?.data?.token;
                 if (token) {
-                    try {                        
+                    try {
                         // Store auth data on client side
                         localStorage.setItem(APP_CONSTANTS.COOKIES.AUTH.COOKIE_NAME, token);
-                        
+
                         // Update auth store
                         authStore.login(token);
-                        
+
                         goto(APP_CONSTANTS.ROUTES.AFTER_LOGIN);
                     } catch (err) {
                         console.error('Failed to parse user data:', err);
@@ -63,7 +63,7 @@
             class="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700"
         >
             <div class="p-6 space-y-4 md:space-y-6 sm:p-8">
-                <form 
+                <form
                     method="POST"
                     use:enhance={handleEnhance}
                     class="space-y-4 md:space-y-6"
@@ -75,12 +75,12 @@
                         >
                             Email
                         </label>
-                        <input 
-                            type="email" 
-                            bind:value={username} 
+                        <input
+                            type="email"
+                            bind:value={username}
                             placeholder="Email..."
                             class="shadow appearance-none border dark:border-gray-600 rounded w-full py-2 px-3 text-gray-700 dark:text-white leading-tight focus:outline-none focus:shadow-outline"
-                            required 
+                            required
                         />
                     </div>
                     <div class="mb-4">
@@ -90,12 +90,12 @@
                         >
                             Password
                         </label>
-                        <input 
-                            type="password" 
-                            bind:value={password} 
+                        <input
+                            type="password"
+                            bind:value={password}
                             placeholder="Password"
                             class="shadow appearance-none border border dark:border-gray-600 rounded w-full py-2 px-3 text-gray-700 dark:text-white mb-3 leading-tight focus:outline-none focus:shadow-outline"
-                            required 
+                            required
                         />
                     </div>
                     {#if error}

@@ -8,10 +8,10 @@ export function checkAuth(request: Request, locals: App.Locals) {
         const token = authHeader.split(' ')[1];
         if (token) return;
     }
-    
+
     // Then try to get token from locals
     if (locals.authToken) return;
-    
+
     throw error(401, 'Unauthorized');
 }
 
@@ -37,4 +37,4 @@ export async function withApiAuth(event: RequestEvent, handler: () => Promise<Re
     checkAuth(event.request, event.locals);
     const response = await handler();
     return setSecurityHeaders(response);
-} 
+}

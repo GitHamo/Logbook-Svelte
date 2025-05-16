@@ -30,7 +30,7 @@ function createPreloaderStore() {
                     ongoingRequestsCount: state.ongoingRequestsCount + 1,
                 };
             }
-            
+
             // start tracking the first request
             return {
                 ...state,
@@ -39,7 +39,7 @@ function createPreloaderStore() {
                 startedAt: Date.now(),
             };
         }),
-        
+
         stop: () => update((state) => {
             if(state.ongoingRequestsCount > 1) {
                 // only reduce the count if there are more than 1 ongoing requests

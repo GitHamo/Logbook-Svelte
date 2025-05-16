@@ -6,11 +6,11 @@
         20: "toggle",
     } as const;
 
-    let { books, onEdit, onDelete, isSelecting = false } = $props<{ 
-        books: Book[], 
+    let { books, onEdit, onDelete, isSelecting = false } = $props<{
+        books: Book[],
         onEdit: (book: Book) => void,
         onDelete: (book: Book) => void,
-        isSelecting?: boolean 
+        isSelecting?: boolean
     }>();
 </script>
 
