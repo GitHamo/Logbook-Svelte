@@ -233,8 +233,8 @@
 	<div class="py-12">
 		<div class="mx-auto max-w-7xl space-y-6 sm:px-6 lg:px-8">
 			{#if currentBook}
-				<div class="grid columns-6 px-5 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3">
-					<div class={'w-full p-2'}>
+				<div class="grid columns-6 px-5 grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3">
+					<div class={'w-full col-span-2 md:col-span-1 p-2'}>
 						<div class={'h-full rounded-lg bg-white p-6'}>
 							<LogbookLogger
 								{isLoading}
@@ -247,7 +247,7 @@
 						</div>
 					</div>
 					<div class={'w-full col-span-2 p-2'}>
-						<div class={'stats grid h-full grid-cols-4 rounded-lg bg-white p-6'}>
+						<div class={'stats grid h-full grid-cols-1 md:grid-cols-4 rounded-lg bg-white p-6'}>
 							<div class="flex flex-col items-center">
 								<dd class="text-[11px] text-gray-500 uppercase dark:text-gray-400">
 									Longest Streak
