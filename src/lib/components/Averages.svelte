@@ -14,7 +14,7 @@
 	};
 </script>
 
-{#if isLoading}
+{#if isLoading && averages.length === 0}
 	<div>Loading..</div>
 {:else}
 	{#each averages as dataPoint, index}
