@@ -9,7 +9,7 @@
     }>();
 </script>
 
-{#if isLoading}
+{#if isLoading && activity.length === 0}
 	<div>Loading..</div>
 {:else}
 	<div class="block flex flex-wrap">
