@@ -4,6 +4,7 @@
     const typeTitles: Record<number, string> = {
         10: "count",
         20: "toggle",
+        30: "money",
     } as const;
 
     let { books, onEdit, onDelete, isSelecting = false } = $props<{
