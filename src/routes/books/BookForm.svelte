@@ -5,6 +5,7 @@
     const BOOK_TYPES = [
         { id: 10, name: "count" },
         { id: 20, name: "toggle" },
+        { id: 30, name: "money" },
     ];
 
     const getInitialFormData = (book: Book | null) => ({

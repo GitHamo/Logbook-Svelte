@@ -6,7 +6,7 @@
 	import LoggerToggle from "./LoggerValueToggle.svelte";
 
     type LoggerComponent = {
-        component: typeof LoggerCount | typeof LoggerToggle;
+        component: typeof LoggerCount | typeof LoggerMoney | typeof LoggerToggle;
         title: string;
         value: number | boolean;
     };
