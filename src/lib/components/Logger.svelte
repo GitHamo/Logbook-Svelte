@@ -2,6 +2,7 @@
 	import type { LogType } from "$lib/types";
 	import LoggerDay from "./LoggerDay.svelte";
 	import LoggerCount from "./LoggerValueCount.svelte";
+	import LoggerMoney from "./LoggerValueMoney.svelte";
 	import LoggerToggle from "./LoggerValueToggle.svelte";
 
     type LoggerComponent = {
@@ -20,6 +21,11 @@
             component: LoggerToggle,
             title: "toggle",
             value: false,
+        },
+        30: {
+            component: LoggerMoney,
+            title: "money",
+            value: 0.0,
         },
     } as const;
 

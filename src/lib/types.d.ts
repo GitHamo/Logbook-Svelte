@@ -1,6 +1,6 @@
 
 declare global {
-    type LogType = 10 | 20;  // 10: count, 20: toggle
+    type LogType = 10 | 20 | 30;  // 10: count, 20: toggle, 30: money
 
     type Book = {
         id: string;
