@@ -53,7 +53,7 @@
 	}
 
 	// reactive fillColor based on elapsed time
-	$: fillColor = elapsed < 3000 ? 'blue' : elapsed < 7000 ? 'orange' : 'red';
+	$: fillColor = elapsed < 7000 ? 'blue' : elapsed < 10000 ? 'orange' : 'red';
 </script>
 
 <div id="main_preloader" class="preloader">
