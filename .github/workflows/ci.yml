@@ -1,0 +1,53 @@
+name: CI
+
+on:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  tests:
+    uses: ./.github/workflows/tests.yml
+
+  # Merges a passing Dependabot PR into main, which deploys it. Branch
+  # protection isn't available on this plan, so the "tests must pass" gate is
+  # this job's `needs`.
+  dependabot-merge:
+    needs: tests
+    if: >-
+      github.event.pull_request.user.login == 'dependabot[bot]' &&
+      github.event.pull_request.base.ref == 'main'
+    runs-on: ubuntu-latest
+    concurrency:
+      group: release
+    permissions:
+      contents: write
+      pull-requests: write
+    env:
+      GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      REPO: ${{ github.repository }}
+      PR: ${{ github.event.pull_request.number }}
+      SHA: ${{ github.event.pull_request.head.sha }}
+    steps:
+      - name: Check the PR is Dependabot's alone and has no major update
+        id: guard
+        run: |
+          set -euo pipefail
+          others=$(gh api "repos/$REPO/pulls/$PR/commits" --jq '[.[] | select(.author.login != "dependabot[bot]")] | length')
+          if [ "$others" != "0" ]; then
+            echo "PR #$PR has commits from someone else; leaving it for review" | tee -a "$GITHUB_STEP_SUMMARY"; exit 0
+          fi
+          # dependabot.yml already ignores majors; this is a second guard.
+          if gh api "repos/$REPO/pulls/$PR/commits" --jq '.[].commit.message' | grep -q 'semver-major'; then
+            echo "PR #$PR contains a major update; leaving it for review" | tee -a "$GITHUB_STEP_SUMMARY"; exit 0
+          fi
+          echo "ok=true" >> "$GITHUB_OUTPUT"
+
+      # sha makes the merge fail if the PR moved on since the tested commit.
+      - name: Merge into main
+        if: steps.guard.outputs.ok == 'true'
+        run: |
+          set -euo pipefail
+          gh api -X PUT "repos/$REPO/pulls/$PR/merge" -f merge_method=merge -f sha="$SHA" >/dev/null
+          echo "Merged #$PR into main." >> "$GITHUB_STEP_SUMMARY"

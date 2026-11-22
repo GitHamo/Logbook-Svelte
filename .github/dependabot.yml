@@ -1,0 +1,20 @@
+# Friday-afternoon minor/patch dependency updates: one PR for all npm packages,
+# against main. Major versions are ignored and must be upgraded by hand. Once
+# its build passes, ci.yml merges it into main, which deploys.
+version: 2
+
+updates:
+  - package-ecosystem: npm
+    directory: /
+    target-branch: main
+    schedule:
+      interval: weekly
+      day: friday
+      time: "16:00"
+      timezone: Europe/Berlin
+    groups:
+      dependencies:
+        patterns: ["*"]
+    ignore:
+      - dependency-name: "*"
+        update-types: ["version-update:semver-major"]
