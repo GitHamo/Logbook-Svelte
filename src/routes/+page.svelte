@@ -3,6 +3,7 @@
 	import Averages from '$lib/components/Averages.svelte';
 	import BooksDropdown from '$lib/components/BooksDropdown.svelte';
 	import Calendar from '$lib/components/Calendar.svelte';
+	import Highlights from '$lib/components/Highlights.svelte';
 	import LogbookLogger from '$lib/components/Logger.svelte';
 	import { preloaderStore } from '$lib/stores/preloader.js';
 	import type { BookHighlights } from '$lib/api/stats';
@@ -251,36 +252,7 @@
 					</div>
 					<div class={'w-full col-span-2 p-2'}>
 						<div class={'stats grid h-full grid-cols-1 md:grid-cols-4 rounded-lg bg-white p-6'}>
-							<div class="flex flex-col items-center">
-								<dd class="text-[11px] text-gray-500 uppercase dark:text-gray-400">
-									Longest Streak
-								</dd>
-								<dt class="mb-2 text-3xl font-semibold">
-									{currentBookData.highlights.longestStreak?.length ?? '-'}
-								</dt>
-								<dd class="text-[11px] text-gray-500 uppercase dark:text-gray-400">
-									days
-								</dd>
-							</div>
-							<div class="flex flex-col items-center">
-								<dd class="text-[11px] text-gray-500 uppercase dark:text-gray-400">Highest</dd>
-								<dt class="mb-2 text-3xl font-semibold">
-									{currentBookData.highlights.max?.value ?? '-'}
-								</dt>
-								<dd class="text-[11px] text-gray-500 uppercase dark:text-gray-400">
-									{currentBookData.highlights.max?.day ?? ''}
-								</dd>
-							</div>
-							<div class="flex flex-col items-center">
-								<dd class="text-[11px] text-gray-500 uppercase dark:text-gray-400">Lowest</dd>
-								<dt class="mb-2 text-3xl font-semibold">
-									{currentBookData.highlights.min?.value ?? '-'}
-								</dt>
-								<dd class="text-[11px] text-gray-500 uppercase dark:text-gray-400">
-									{currentBookData.highlights.min?.day ?? ''}
-								</dd>
-							</div>
-
+							<Highlights highlights={currentBookData.highlights} {isLoading} />
 							<Averages averages={currentBookData.averages} {isLoading} />
 						</div>
 					</div>
