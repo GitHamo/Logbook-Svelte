@@ -5,6 +5,7 @@
 	import Calendar from '$lib/components/Calendar.svelte';
 	import LogbookLogger from '$lib/components/Logger.svelte';
 	import { preloaderStore } from '$lib/stores/preloader.js';
+	import type { BookHighlights } from '$lib/api/stats';
 	import type { Book } from '$lib/types';
 	import moment, { type Moment } from 'moment';
 	import { onMount } from 'svelte';
@@ -14,6 +15,7 @@
 		averages: number[];
 		activity: Record<string, number | boolean>;
 		activityCalendar: Calendars.YearlyCalendar[];
+		highlights: BookHighlights;
 	}
 
 	// Constants
@@ -33,6 +35,7 @@
 		averages: [],
 		activity: {},
 		activityCalendar: [],
+		highlights: { min: null, max: null, longestStreak: null },
 	});
 	let isLoading = $derived($preloaderStore.ongoing || false);
 	let today = $state(moment());
@@ -252,23 +255,29 @@
 								<dd class="text-[11px] text-gray-500 uppercase dark:text-gray-400">
 									Longest Streak
 								</dd>
-								<dt class="mb-2 text-3xl font-semibold">123</dt>
+								<dt class="mb-2 text-3xl font-semibold">
+									{currentBookData.highlights.longestStreak?.length ?? '-'}
+								</dt>
 								<dd class="text-[11px] text-gray-500 uppercase dark:text-gray-400">
 									days
 								</dd>
 							</div>
 							<div class="flex flex-col items-center">
 								<dd class="text-[11px] text-gray-500 uppercase dark:text-gray-400">Highest</dd>
-								<dt class="mb-2 text-3xl font-semibold">123</dt>
+								<dt class="mb-2 text-3xl font-semibold">
+									{currentBookData.highlights.max?.value ?? '-'}
+								</dt>
 								<dd class="text-[11px] text-gray-500 uppercase dark:text-gray-400">
-									14 Febraury 2023
+									{currentBookData.highlights.max?.day ?? ''}
 								</dd>
 							</div>
 							<div class="flex flex-col items-center">
 								<dd class="text-[11px] text-gray-500 uppercase dark:text-gray-400">Lowest</dd>
-								<dt class="mb-2 text-3xl font-semibold">2</dt>
+								<dt class="mb-2 text-3xl font-semibold">
+									{currentBookData.highlights.min?.value ?? '-'}
+								</dt>
 								<dd class="text-[11px] text-gray-500 uppercase dark:text-gray-400">
-									23 Januaray 2025
+									{currentBookData.highlights.min?.day ?? ''}
 								</dd>
 							</div>
 
