@@ -1,7 +1,6 @@
 <script lang="ts">
-    let { averages, isLoading = false } = $props<{
+    let { averages } = $props<{
         averages: Record<string, string|number>[];
-        isLoading: boolean;
     }>();
 
     // Static lookup for labels and sub-labels
@@ -14,23 +13,19 @@
 	};
 </script>
 
-{#if isLoading && averages.length === 0}
-	<div>Loading..</div>
-{:else}
-	{#each averages as dataPoint, index}
-		<div class="flex flex-col items-center">
-			<dd
-				class="text-gray-500 dark:text-gray-400 uppercase text-[11px]"
-			>
-				{averageLabels[index].label}
-			</dd>
-			<dt class="mb-2 text-3xl font-semibold">{dataPoint[1]}</dt>
-			<dd
-				class="text-gray-500 dark:text-gray-400 uppercase text-[11px]"
-			>
-				{"over " + dataPoint[2]}&nbsp;{averageLabels[index]
-					.subLabel}
-			</dd>
-		</div>
-	{/each}
-{/if}
+{#each averages as dataPoint, index}
+	<div class="flex flex-col items-center">
+		<dd
+			class="text-gray-500 dark:text-gray-400 uppercase text-[11px]"
+		>
+			{averageLabels[index].label}
+		</dd>
+		<dt class="mb-2 text-3xl font-semibold">{dataPoint[1]}</dt>
+		<dd
+			class="text-gray-500 dark:text-gray-400 uppercase text-[11px]"
+		>
+			{"over " + dataPoint[2]}&nbsp;{averageLabels[index]
+				.subLabel}
+		</dd>
+	</div>
+{/each}

@@ -252,8 +252,12 @@
 					</div>
 					<div class={'w-full col-span-2 p-2'}>
 						<div class={'stats grid h-full grid-cols-1 md:grid-cols-4 rounded-lg bg-white p-6'}>
-							<Highlights highlights={currentBookData.highlights} {isLoading} />
-							<Averages averages={currentBookData.averages} {isLoading} />
+							{#if isLoading && currentBookData.averages.length === 0}
+								<div>Loading..</div>
+							{:else}
+								<Highlights highlights={currentBookData.highlights} />
+								<Averages averages={currentBookData.averages} />
+							{/if}
 						</div>
 					</div>
 					<div class={'w-full col-span-3 p-2'}>
